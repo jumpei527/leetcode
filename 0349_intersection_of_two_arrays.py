@@ -17,6 +17,7 @@ class Solution:
                 intersection.append(n2)
         return intersection
 
+
 class Solution2:
     # Time: O(n * m)
     # Space: O(min(n, m))
@@ -26,6 +27,7 @@ class Solution2:
             if num in nums2:
                 common_elements.add(num)
         return list(common_elements)
+
 
 class Solution3:
     # Time: O(n + m)
