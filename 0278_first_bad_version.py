@@ -11,13 +11,13 @@ def isBadVersion(version: int) -> bool:
 
 class Solution:
     def firstBadVersion(self, n: int) -> int:
-        left = 1
-        right = n
+        ok = -1
+        ng = n
 
-        while left <= right:
-            mid = (left + right) // 2
+        while abs(ok - ng) > 1:
+            mid = (ok + ng) // 2
             if isBadVersion(mid):
-                right = mid - 1
+                ng = mid
             else:
-                left = mid + 1
-        return right + 1
+                ok = mid
+        return ok + 1
