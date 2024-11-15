@@ -1,6 +1,5 @@
-# Time: O(n)
-# Space: O(n)
 from typing import Optional
+from collections import deque
 
 
 # Definition for a binary tree node.
@@ -12,6 +11,8 @@ class TreeNode:
 
 
 class Solution:
+    # Time: O(n)
+    # Space: O(n)
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
@@ -23,3 +24,23 @@ class Solution:
         right_sum = self.hasPathSum(root.right, targetSum - root.val)
 
         return left_sum or right_sum
+
+
+class Solution2:
+    # Time: O(n)
+    # Space: O(n)
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+
+        queue = deque([(root, root.val)])
+        while queue:
+            current, current_sum = queue.popleft()
+            if not current.left and not current.right:
+                if current_sum == targetSum:
+                    return True
+            if current.left:
+                queue.append([current.left, current_sum + current.left.val])
+            if current.right:
+                queue.append([current.right, current_sum + current.right.val])
+        return False
