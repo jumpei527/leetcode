@@ -1,3 +1,6 @@
+# n = len(prices)
+# Time: O(n)
+# Space: O(1)
 from typing import List
 
 
