@@ -7,18 +7,17 @@ from typing import List
 
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
-        row = len(grid)
-        col = len(grid[0])
         perimeter = 0
+        ISOLATED_ISLAND_PERIMETER = 4
 
-        for r in range(row):
-            for c in range(col):
-                if grid[r][c] == 1:
-                    perimeter += 4 - self.countConnectedIslands(grid, r, c)
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                if grid[row][col] == 1:
+                    perimeter += ISOLATED_ISLAND_PERIMETER - self.countConnectedIslands(grid, row, col)
 
         return perimeter
 
-    def countConnectedIslands(self, grid: List[List[int]], row, col):
+    def countConnectedIslands(self, grid: List[List[int]], row: int, col: int) -> int:
         count = 0
 
         if row > 0 and grid[row-1][col] == 1:
