@@ -15,9 +15,10 @@ class TreeNode:
 class Solution:
     def findTilt(self, root: Optional[TreeNode]) -> int:
         """
-        Compute the tilt of a binary tree, where the tilt of a node is defined 
-        as the absolute difference between the sum of values in its left and 
-        right subtrees. The tilt of the entire tree is the sum of all node tilts.
+        Compute the tilt of a binary tree, where the tilt of a node is
+        defined as the absolute difference between the sum of values in
+        its left and right subtrees. The tilt of the entire tree is the
+        sum of all node tilts.
 
         Args:
             root (Optional[TreeNode]): The root node of the binary tree.
