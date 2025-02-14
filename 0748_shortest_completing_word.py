@@ -35,18 +35,44 @@ class Solution:
                 )
             "steps"
         """
-        alpha_chars = []
+        required_chars = []
         for char in licensePlate:
             if char.isalpha():
-                alpha_chars.append(char.lower())
-        alpha_count = Counter(alpha_chars)
+                required_chars.append(char.lower())
+        required_char_counts = Counter(required_chars)
 
         words.sort(key=len)
         for word in words:
-            if Counter(word) >= alpha_count:
+            if self.is_completing_word(word, required_char_counts):
                 return word
 
         return ""
+
+    def is_completing_word(
+        self, word: str, required_char_counts: Counter
+    ) -> bool:
+        """
+        Check if the given word contains all the required characters in the
+        required_char_counts Counter.
+
+        Args:
+            word (str): The word to check.
+            required_char_counts (Counter): The required characters.
+
+        Returns:
+            bool: True if the word contains all the required characters.
+
+        Examples:
+            >>> Solution().is_completing_word(
+                    "steps", Counter({'s': 2, 'p': 1, 't': 1})
+                )
+            True
+            >>> Solution().is_completing_word(
+                    "stepple", Counter({'s': 2, 'p': 1, 't': 1})
+                )
+            False
+        """
+        return Counter(word) >= required_char_counts
 
 
 class TestShortestCompletingWord(unittest.TestCase):
