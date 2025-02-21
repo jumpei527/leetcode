@@ -11,7 +11,8 @@ class Solution:
         self, paragraph: str, banned: List[str]
     ) -> str:
         """
-        Receives a paragraph and a list of banned words.
+        Receives a paragraph and a list of banned words. Paragraph consists
+        of English letters, space ' ', or one of the symbols: "!?',;."
         Returns the most common word that is not in the list of banned words.
 
         Args:
@@ -33,9 +34,9 @@ class Solution:
             paragraph = paragraph.replace(char, " ")
         words_counts = Counter(paragraph.lower().split())
 
-        return self.findMostFrequentWord(words_counts, banned)
+        return self.findMostFrequentValidWord(words_counts, banned)
 
-    def findMostFrequentWord(
+    def findMostFrequentValidWord(
         self, words_counts: Counter, banned: List[str]
     ) -> str:
         """
@@ -57,14 +58,14 @@ class Solution:
             >>> Solution().find_common_word(words_counts, ["hit"])
             'ball'
         """
-        common_word = ""
+        most_frequent_valid_word = ""
         max_count = 0
         for word, count in words_counts.items():
             if word not in banned and count > max_count:
-                common_word = word
+                most_frequent_valid_word = word
                 max_count = count
 
-        return common_word
+        return most_frequent_valid_word
 
 
 class TestMostCommonWord(unittest.TestCase):
