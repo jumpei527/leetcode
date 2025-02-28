@@ -23,10 +23,16 @@ class Solution:
             >>> Solution().buddyStrings('ab', 'ba')
             True
         """
+        REQUIRED_SWAP_COUNT = 2
         s_length = len(s)
         goal_length = len(goal)
         if s_length != goal_length:
             return False
+
+        # If the two strings are equal, then we need to check if
+        # there are duplicate characters in the string.
+        if s == goal:
+            return s_length != len(set(s))
 
         diff_idx = []
 
@@ -34,11 +40,8 @@ class Solution:
             if s[idx] != goal[idx]:
                 diff_idx.append(idx)
 
-        if len(diff_idx) == 2:
+        if len(diff_idx) == REQUIRED_SWAP_COUNT:
             return self.is_equal_after_swap(s, goal, diff_idx)
-
-        if not diff_idx and s_length != len(set(s)):
-            return True
 
         return False
 
@@ -70,7 +73,7 @@ class Solution:
 
 
 class TestBuddyStrings(unittest.TestCase):
-    def test_swap_two_different_chars(self):
+    def test_buddyStrings_swap_two_different_chars(self):
         s = 'ab'
         goal = 'ba'
         expected = True
@@ -79,7 +82,7 @@ class TestBuddyStrings(unittest.TestCase):
             result, expected, f"Expected {expected} but got {result}"
         )
 
-    def test_no_swap_strings(self):
+    def test_buddyStrings_no_swap_strings(self):
         s = 'ab'
         goal = 'ab'
         expected = False
@@ -88,7 +91,7 @@ class TestBuddyStrings(unittest.TestCase):
             result, expected, f"Expected {expected} but got {result}"
         )
 
-    def test_no_swap_strings_with_duplicate_chars(self):
+    def test_buddyStrings_no_swap_strings_with_duplicate_chars(self):
         s = 'aa'
         goal = 'aa'
         expected = True
