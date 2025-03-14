@@ -2,15 +2,16 @@ import unittest
 
 
 class Solution:
-    def countArrangement(self, n: int) -> int:
+    def countArrangement(self, arrangement_size: int) -> int:
         """
-        Given an integer n, return the number of valid arrangements
-        where the i-th position (1-based) follows these rules:
-        - The number at position i is divisible by i, or
+        Given an integer arrangement_size, return the number of valid
+        arrangements where the i-th position meets either of the
+        following rules:
+        - The number at position i is divisible by i.
         - i is divisible by the number at position i.
 
         Args:
-            n (int): The size of the arrangement.
+            arrangement_size (int): The size of the arrangement.
 
         Returns:
             int: The total number of valid arrangements.
@@ -19,8 +20,9 @@ class Solution:
             2
         """
         self.arr_count = 0
-        self.visited = [False] * (n+1)
-        self.count_with_backtrack(n, 0)
+        self.visited = [False] * (arrangement_size + 1)
+        FIRST_POSITION = 1
+        self.count_with_backtrack(arrangement_size, FIRST_POSITION)
         return self.arr_count
 
     def count_with_backtrack(self, arr_size: int, position: int) -> None:
@@ -35,11 +37,11 @@ class Solution:
             >>> sol = Solution()
             >>> sol.arr_count = 0
             >>> sol.visited = [False] * 3
-            >>> sol.count_with_backtrack(2, 0)
+            >>> sol.count_with_backtrack(2, 1)
             >>> sol.arr_count
             2
         """
-        if position == arr_size:
+        if position > arr_size:
             self.arr_count += 1
             return
 
@@ -55,7 +57,7 @@ class Solution:
 
         Args:
             num (int): The number to be placed.
-            position (int): The current position (0-based index).
+            position (int): The current position (1-based index).
 
         Returns:
             bool: True if the number satisfies the arrangement
@@ -63,11 +65,10 @@ class Solution:
 
         Example:
             >>> sol = Solution()
-            >>> sol.is_position_valid(2, 0)
+            >>> sol.is_position_valid(2, 1)
             True
         """
-        pos = position + 1
-        return num % pos == 0 or pos % num == 0
+        return num % position == 0 or position % num == 0
 
 
 class TestCountArrangement(unittest.TestCase):
