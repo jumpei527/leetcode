@@ -1,5 +1,5 @@
-import unittest
 from returns.result import Failure, Success, Result
+from returns.pipeline import is_successful
 
 
 class Solution:
@@ -47,39 +47,26 @@ class Solution:
         return Success(True)
 
 
-class TestSolution(unittest.TestCase):
-    def test_is_isomorphic_with_isomorphic_strings(self):
-        source = "egg"
-        target = "add"
-        expected = Success(True)
-        result = Solution().is_isomorphic(source, target)
-        self.assertEqual(
-            result, expected, f"Expected {expected} but got {result}."
-        )
+class TestSolution:
+    def setup_method(self):
+        self.solution = Solution()
 
-    def test_is_isomorphic_with_non_isomorphic_strings(self):
-        source = "foo"
-        target = "bar"
-        expected = Success(False)
-        result = Solution().is_isomorphic(source, target)
-        self.assertEqual(
-            result, expected, f"Expected {expected} but got {result}."
-        )
+    def test_is_isomorphic_success(self):
+        result = self.solution.is_isomorphic("egg", "add")
+        assert is_successful(result)
+        assert result.unwrap() is True
 
-    def test_is_isomorphic_with_different_lengths(self):
-        source = "ab"
-        target = "a"
-        expected = Failure("Strings must be of the same length.")
-        result = Solution().is_isomorphic(source, target)
-        self.assertEqual(
-            result, expected, f"Expected {expected} but got {result}."
-        )
+    def test_is_isomorphic_failure(self):
+        result = self.solution.is_isomorphic("foo", "bar")
+        assert is_successful(result)
+        assert result.unwrap() is False
 
-    def test_is_isomorphic_with_empty_strings(self):
-        source = ""
-        target = ""
-        expected = Failure("Both strings must be non-empty.")
-        result = Solution().is_isomorphic(source, target)
-        self.assertEqual(
-            result, expected, f"Expected {expected} but got {result}."
-        )
+    def test_is_isomorphic_empty(self):
+        result = self.solution.is_isomorphic("", "")
+        assert not is_successful(result)
+        assert "Both strings must be non-empty." in result.failure()
+
+    def test_is_isomorphic_different_length(self):
+        result = self.solution.is_isomorphic("abc", "ab")
+        assert not is_successful(result)
+        assert "Strings must be of the same length." in result.failure()
