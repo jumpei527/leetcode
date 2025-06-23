@@ -22,7 +22,7 @@ class Solution:
         subsets_result = []
 
         def generate_subsets(
-            start_idx: int = 0, cur_subset: List[int] = []
+            start_idx: int = 0, cur_subset: List[int] | None = None
         ) -> None:
             """
             Helper function to generate subsets using backtracking.
@@ -34,6 +34,9 @@ class Solution:
             Returns:
                 None: This function modifies subsets_result in place.
             """
+            if cur_subset is None:
+                cur_subset = []
+
             subsets_result.append(cur_subset[:])
             for idx in range(start_idx, len(nums)):
                 cur_subset.append(nums[idx])
