@@ -1,12 +1,5 @@
 package main
 
-// Definition for a binary tree node.
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 // n = number of nodes in the tree
 // Time:  O(n)
 // Space: O(h)  (h = height of the tree, worst case O(n))
